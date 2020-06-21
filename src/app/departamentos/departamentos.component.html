@@ -4,27 +4,102 @@
     <p>Lista de departamentos para agregar a la base de datos de AMOVIL</p>
     <section class="nav nav-tabs border-0">
         <section class="form-inline">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+          <input class="form-control mr-sm-2" [(ngModel)]="buscar" (keyup)="filterName(buscar)" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-primary my-2 my-sm-0" (click)="filterName(buscar)" type="submit">Search</button>
         </section>
-        <button class="btn btn-success my-2 ml-sm-5" mat-button (click)="openDialog()">Agregar Departamento</button>
+        <button class="btn btn-success my-2 ml-sm-5" mat-button (click)="open(addDepar)">Agregar Departamento</button>
     </section>
   </section>
 
   <!-- Lista departamentos -->
-  <div class="container mt-3 text-center">
-    <div class="row mx-auto w-50">
-      <div class="col-md" *ngFor="let depar of departamentos">
+  <div class="container mt-3 text-center" *ngIf="filter">
+    <div class="row mx-auto w-75">
+      <div class="col-md-6 mb-2" *ngFor="let depar of departamentos">
         <div class="card d-flex flex-row border border-primary" style="height: 4em;">
-          <section class="bg-primary">ffdfs</section>
-          <div class="border mx-auto pt-2">
+          <section class="bg-primary" style="display: block;">&nbsp;&nbsp;&nbsp;&nbsp;</section>
+          <div class="mx-auto pt-2">
             <h6>{{depar.nombre_d}}</h6>
             <p>Cod: {{depar.codigo_dane_d}}</p>
           </div>
+          <section class="mx-auto mt-3">
+            <a href="#" class="mr-2" (click)="open(editDepar)">Editar</a>
+            <a href="#" (click)="deleteDepartamento(depar.id, depar.nombre_d)">Borrar</a>
+          </section>
         </div>
       </div>
     </div>
   </div>
+
+<!-- Filtrar departamentos -->
+<div class="container mt-3 text-center" *ngIf="!filter" >
+  <div class="row mx-auto w-75">
+    <div class="col-md-6 mb-2" *ngFor="let filterDepar of filterDepartamentos">
+      <div class="card d-flex flex-row border border-primary" style="height: 4em;">
+        <section class="bg-primary" style="display: block;">&nbsp;&nbsp;&nbsp;&nbsp;</section>
+        <div class="mx-auto pt-2">
+          <h6>{{filterDepar.nombre_d}}</h6>
+          <p>Cod: {{filterDepar.codigo_dane_d}}</p>
+        </div>
+        <section class="mx-auto mt-3">
+          <a href="#" class="mr-2" >Editar</a>
+          <a href="#" (click)="deleteDepartamento(filterDepar.id, filterDepar.nombre_d)">Borrar</a>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal agregar Departamento -->
+<ng-template #addDepar let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Agregar Departamento</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <section>
+      <section class="form-group">
+        <label for="">código</label>
+        <input type="text" [(ngModel)]="departamento.codigo_dane_d" class="form-control" placeholder="código">
+      </section>
+      <section class="form-group">
+        <label for="">Nombre</label>
+        <input type="text" [(ngModel)]="departamento.nombre_d" class="form-control" placeholder="nombre">
+      </section>
+    </section>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" (click)="modal.close(addDepar)">Cancelar</button>
+    <button type="button" class="btn btn-outline-primary" (click)="saveDepartamento()">Guardar</button>
+  </div>
+</ng-template>
+
+<!-- Modal editar Departamento -->
+<ng-template #editDepar let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editar Departamento</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <section>
+      <section class="form-group">
+        <label for="">código</label>
+        <input type="text" [(ngModel)]="departamento.codigo_dane_d" class="form-control" placeholder="código">
+      </section>
+      <section class="form-group">
+        <label for="">Nombre</label>
+        <input type="text" [(ngModel)]="departamento.nombre_d" class="form-control" placeholder="nombre">
+      </section>
+    </section>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" (click)="modal.close(editDepar)">Cancelar</button>
+    <button type="button" class="btn btn-outline-primary" (click)="saveDepartamento()">Guardar</button>
+  </div>
+</ng-template>
 
 </section>
 

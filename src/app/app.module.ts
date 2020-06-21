@@ -12,7 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { DialogContentComponent } from './dialog-content/dialog-content.component';
 import { FormAddDepartamentoComponent } from './form-add-departamento/form-add-departamento.component';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Route[] = [
   {path: '', component: DepartamentosComponent},
@@ -35,7 +35,8 @@ const routes: Route[] = [
     RouterModule.forRoot(routes),
     HttpClientModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
